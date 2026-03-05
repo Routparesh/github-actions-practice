@@ -8,3 +8,16 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v5
       - run: echo "Hello from GitHub Actions!"
+      - name: Display current date and time
+        run: date
+      - name: Display current branch name
+        run: |
+          - echo "Current branch: $GITHUB_REF"
+      - name: Display list of files in the repository
+        run: ls -la
+
+      - name: os and environment information
+        run: |
+          echo "Operating System: $(uname -s)"
+          echo "Environment Variables:"
+          printenv
