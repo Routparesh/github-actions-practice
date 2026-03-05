@@ -12,7 +12,7 @@ jobs:
         run: date
       - name: Display current branch name
         run: |
-          - echo "Current branch: $GITHUB_REF"
+          echo "Current branch: ${{ github.ref_name }}"
       - name: Display list of files in the repository
         run: ls -la
 
