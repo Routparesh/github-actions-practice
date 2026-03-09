@@ -28,3 +28,16 @@ jobs:
         with:
           name: my-artifact
           path: log.txt
+  download-atifact:
+    runs-on: ubuntu-latest
+    needs: secret-and-artifacts
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+
+      - name: Display artifact content
+        run: |
+          echo "Content of the downloaded artifact:"
+          cat log.txt
