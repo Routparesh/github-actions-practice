@@ -1,0 +1,40 @@
+name: Auto Create PR
+on:
+  workflow_dispatch: # Trigger manually
+  push:
+    branches:
+      - main
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make changes
+        run: |
+          echo "Auto update at $(date)" >> auto-update.txt
+
+      - name: Commit changes to new branch
+        run: |
+          BRANCH="auto-update-$(date +%Y%m%d%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add .
+          git commit -m "Automated update"
+          git push origin "$BRANCH"
+
+      - name: PR check running for branch
+        run: |
+          echo "PR check running for branch: ${{ github.ref_name }}"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ github.ref_name }}
+          title: 'Automated Update'
+          body: 'This PR was created automatically by GitHub Actions.'
+          base: main
