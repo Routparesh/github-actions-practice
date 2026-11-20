@@ -1,0 +1,22 @@
+name: matrix
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  matrix-job:
+    strategy:
+      matrix:
+        python: [3.10, 3.11, 3.12]
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{matrix.python}}
+
+      - name: print version
+        run: |
+          python --version
